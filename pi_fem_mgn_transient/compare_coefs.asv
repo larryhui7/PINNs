@@ -1,0 +1,37 @@
+clc
+clear
+close all
+
+%% Get transient FEM results 
+ntsteps = 300;
+dt = 0.001;
+tlist_train = ntsteps*dt;
+tlist_eval = 0:dt:(3*ntsteps*dt);
+
+%% Plot correlation coefficients
+RxFineSq = load("R_ux_fine_square.mat");
+RyFineSq = load("R_uy_fine_square.mat");
+
+RxCoSq = load("R_ux_coarse_square.mat");
+RyCoSq = load("R_uy_coarse_square.mat");
+
+RxCoTri = load("R_ux_coarse_tri.mat");
+RyCoTri = load("R_uy_coarse_tri.mat");
+
+figure 
+hold on
+xline(tlist_train,"--", "DisplayName", "Training cut-off", "LineWidth", 1.5)
+plot(tlist_eval, RxFineSq.R_ux, "b--", "DisplayName", "R_{ux}: Fine square", "LineWidth", 3)
+plot(tlist_eval, RxCoSq.R_ux, "r--",  "DisplayName", "R_{ux}: Fine square", "LineWidth", 3)
+plot(tlist_eval, RxCoTri.R_ux, "g--",  "DisplayName", "R_{ux}: Fine square", "LineWidth", 3)
+
+
+plot(tlist_eval, RyFineSq.R_uy, "b", "DisplayName", "R_{uy}: Fine square", "LineWidth", 3)
+plot(tlist_eval, RxCoSq.R_uy, "r",  "DisplayName", "R_{ux}: Fine square", "LineWidth", 3)
+ylim([0, 1])
+xlabel("time [s]")
+ylabel("R^2")
+grid on
+box on
+legend("Location", "southeast")
+title("Testing on training model: dt = " + num2str(dt))

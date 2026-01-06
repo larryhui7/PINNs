@@ -1,0 +1,14 @@
+model = createpde("structural", "static-planestress");
+rect = [3,4, 0, L, L, 0, 0, 0 H H]';
+g = decsg(rect);
+geometryFromEdges(model, g);
+generateMesh(model, "Hmax", 0.05);
+
+figure
+pdegplot(model, "VertexLabels", "on")
+hold on
+pdegplot(model, "EdgeLabels","on")
+hold on
+pdemesh(model)
+
+structuralProperties(model, "YoungsModulus", E, "PoissonsRatio", nu, "l")
