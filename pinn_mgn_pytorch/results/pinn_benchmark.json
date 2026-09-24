@@ -1,0 +1,145 @@
+{
+  "timoshenko_beam": {
+    "geometry": "beam",
+    "bc": "prescribed_exact_left",
+    "load": "parabolic_end_shear",
+    "loss": "strong",
+    "n_fea_nodes": 297,
+    "n_collocation": 15000,
+    "member_rel_l2_vs_fea": [
+      0.008999730002723975,
+      0.01254883185166258,
+      0.009703721997125473
+    ],
+    "ensemble_rel_l2_vs_fea": 0.010415791429275423,
+    "ensemble_max_std_over_max_u": 0.001572472957381062,
+    "train_time_s": [
+      428.38349970895797,
+      428.7627028748393,
+      346.5241393749602
+    ],
+    "final_loss_parts": {
+      "pde": 0.00014945017755962908,
+      "right": 7.5315347203286365e-06,
+      "top": 9.213577868649736e-06,
+      "bottom": 1.8280898075317964e-05
+    },
+    "fea_time_s": 0.005079624708741903,
+    "ensemble_rel_l2_vs_exact": 0.003001017002026444,
+    "fea_rel_l2_vs_exact": 0.007340855117562785
+  },
+  "cantilever_udl": {
+    "device": "mps",
+    "geometry": "beam",
+    "bc": "clamped_left",
+    "load": "uniform_pressure_top",
+    "loss": "energy",
+    "n_fea_nodes": 369,
+    "n_collocation": 15000,
+    "member_rel_l2_vs_fea": [
+      0.011908142935301458,
+      0.002605955227739808,
+      0.0070842293612498235
+    ],
+    "ensemble_rel_l2_vs_fea": 0.00715171896097764,
+    "ensemble_max_std_over_max_u": 0.0028517239667119297,
+    "train_time_s": [
+      81.01502487482503,
+      80.37286495789886,
+      80.95976524986327
+    ],
+    "final_loss_parts": {
+      "pde": 193.3589324951172,
+      "top": 30.128538131713867,
+      "right": 0.33760249614715576,
+      "bottom": 25.3353328704834
+    },
+    "fea_time_s": 0.005451084114611149
+  },
+  "plate_hole_uniaxial": {
+    "geometry": "plate_with_hole",
+    "bc": "symmetry",
+    "load": "tension sx=1.0 sy=0.0",
+    "loss": "strong",
+    "n_fea_nodes": 561,
+    "n_collocation": 17000,
+    "member_rel_l2_vs_fea": [
+      0.011307837509379888,
+      0.010419638111055972,
+      0.0174969398760856
+    ],
+    "ensemble_rel_l2_vs_fea": 0.012987781490180792,
+    "ensemble_max_std_over_max_u": 0.0044420998328470246,
+    "train_time_s": [
+      449.07142916694283,
+      446.46802600007504,
+      419.9329802496359
+    ],
+    "final_loss_parts": {
+      "pde": 0.00011038233787985519,
+      "right": 3.0461320420727134e-05,
+      "top": 9.736792708281428e-05,
+      "hole": 2.8588799523276975e-06,
+      "sym_x0": 1.18538682727376e-05,
+      "sym_y0": 4.816368345927913e-06
+    },
+    "fea_time_s": 0.009193375241011381
+  },
+  "plate_hole_biaxial": {
+    "geometry": "plate_with_hole",
+    "bc": "symmetry",
+    "load": "tension sx=1.0 sy=1.0",
+    "loss": "strong",
+    "n_fea_nodes": 561,
+    "n_collocation": 17000,
+    "member_rel_l2_vs_fea": [
+      0.001469558548442667,
+      0.002718173471164683,
+      0.0011506239198601188
+    ],
+    "ensemble_rel_l2_vs_fea": 0.0014076321882096883,
+    "ensemble_max_std_over_max_u": 0.0011055260170394596,
+    "train_time_s": [
+      488.17955445777625,
+      551.9371517081745,
+      451.8596695000306
+    ],
+    "final_loss_parts": {
+      "pde": 3.4943634091177955e-05,
+      "right": 7.591020221298095e-06,
+      "top": 1.1172024642291944e-05,
+      "hole": 4.870990437666478e-07,
+      "sym_x0": 8.112082241495955e-07,
+      "sym_y0": 7.694935675317538e-07
+    },
+    "fea_time_s": 0.008817415684461594
+  },
+  "square_gravity": {
+    "device": "mps",
+    "geometry": "square",
+    "bc": "clamped_left",
+    "load": "gravity_body_force",
+    "loss": "energy",
+    "n_fea_nodes": 289,
+    "n_collocation": 15000,
+    "member_rel_l2_vs_fea": [
+      0.008163826009106213,
+      0.005545435580338303,
+      0.006638681877401797
+    ],
+    "ensemble_rel_l2_vs_fea": 0.006770409420671763,
+    "ensemble_max_std_over_max_u": 0.0020614890854230307,
+    "train_time_s": [
+      67.92908874992281,
+      68.52028054138646,
+      68.45400120783597
+    ],
+    "final_loss_parts": {
+      "pde": 167.90670776367188,
+      "top": 0.13379772007465363,
+      "right": 0.0004431751440279186,
+      "bottom": 0.05240761488676071
+    },
+    "fea_time_s": 0.004979583900421858
+  }
+}

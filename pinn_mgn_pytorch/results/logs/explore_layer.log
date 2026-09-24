@@ -1,0 +1,14 @@
+  [mgn seed=0] epoch    1 graphs=168 loss=1.403e+00 phys=3.546e+00 lr=1.0e-03
+  [mgn seed=0] epoch   25 graphs=168 loss=7.790e-01 phys=1.758e+00 lr=7.8e-04
+  [mgn seed=0] epoch   50 graphs=168 loss=6.112e-01 phys=1.547e+00 lr=3.1e-04
+  [mgn seed=0] epoch   75 graphs=168 loss=4.767e-01 phys=1.288e+00 lr=1.1e-05
+train subset median err 0.970774382352829 max 1.000049114227295
+beam_end_shear_L7_D1_70x10               1.0000
+beam_end_shear_L4_D1_48x12               1.0000
+beam_udl_L7_D1_56x8                      1.0000
+beam_gravity_L5_D1_50x10                 1.0000
+hole_a0.25_s1,0_28x14                    0.4390
+hole_a0.25_s1,1_40x20                    0.7556
+hole_a0.2_s1,0.5_36x18                   0.7064
+plate_left_gravity_1.5x1_n18             0.9990
+plate_bottom_lateral_1x1_n20             0.9957

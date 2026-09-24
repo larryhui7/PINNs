@@ -1,0 +1,62 @@
+  [cantilever_udl seed=0] adam     0 loss=1.315e+00 lr=1.0e-03
+  [cantilever_udl seed=0] adam  1000 loss=-8.859e-04 lr=9.6e-04
+  [cantilever_udl seed=0] adam  2000 loss=-1.029e-03 lr=8.5e-04
+  [cantilever_udl seed=0] adam  3000 loss=-1.086e-03 lr=6.9e-04
+  [cantilever_udl seed=0] adam  4000 loss=-1.103e-03 lr=5.0e-04
+  [cantilever_udl seed=0] adam  5000 loss=-1.114e-03 lr=3.2e-04
+  [cantilever_udl seed=0] adam  6000 loss=-1.116e-03 lr=1.5e-04
+  [cantilever_udl seed=0] adam  7000 loss=-1.121e-03 lr=4.8e-05
+  [cantilever_udl seed=0] adam  7999 loss=-1.118e-03 lr=1.0e-05
+  [cantilever_udl seed=0] final strong-form loss=2.492e+02
+  [cantilever_udl seed=1] adam     0 loss=8.243e-02 lr=1.0e-03
+  [cantilever_udl seed=1] adam  1000 loss=-1.074e-03 lr=9.6e-04
+  [cantilever_udl seed=1] adam  2000 loss=-1.107e-03 lr=8.5e-04
+  [cantilever_udl seed=1] adam  3000 loss=-1.119e-03 lr=6.9e-04
+  [cantilever_udl seed=1] adam  4000 loss=-1.119e-03 lr=5.0e-04
+  [cantilever_udl seed=1] adam  5000 loss=-1.127e-03 lr=3.2e-04
+  [cantilever_udl seed=1] adam  6000 loss=-1.128e-03 lr=1.5e-04
+  [cantilever_udl seed=1] adam  7000 loss=-1.128e-03 lr=4.8e-05
+  [cantilever_udl seed=1] adam  7999 loss=-1.128e-03 lr=1.0e-05
+  [cantilever_udl seed=1] final strong-form loss=1.846e+02
+  [cantilever_udl seed=2] adam     0 loss=7.525e-01 lr=1.0e-03
+  [cantilever_udl seed=2] adam  1000 loss=-9.781e-04 lr=9.6e-04
+  [cantilever_udl seed=2] adam  2000 loss=-1.080e-03 lr=8.5e-04
+  [cantilever_udl seed=2] adam  3000 loss=-1.100e-03 lr=6.9e-04
+  [cantilever_udl seed=2] adam  4000 loss=-1.116e-03 lr=5.0e-04
+  [cantilever_udl seed=2] adam  5000 loss=-1.118e-03 lr=3.2e-04
+  [cantilever_udl seed=2] adam  6000 loss=-1.123e-03 lr=1.5e-04
+  [cantilever_udl seed=2] adam  7000 loss=-1.124e-03 lr=4.8e-05
+  [cantilever_udl seed=2] adam  7999 loss=-1.124e-03 lr=1.0e-05
+  [cantilever_udl seed=2] final strong-form loss=2.134e+02
+cantilever_udl: ensemble rel-L2 vs FEA = 0.0072  members = [0.0119, 0.0026, 0.0071]
+  [square_gravity seed=0] adam     0 loss=2.617e-01 lr=1.0e-03
+  [square_gravity seed=0] adam  1000 loss=-7.706e-01 lr=9.6e-04
+  [square_gravity seed=0] adam  2000 loss=-7.720e-01 lr=8.5e-04
+  [square_gravity seed=0] adam  3000 loss=-7.714e-01 lr=6.9e-04
+  [square_gravity seed=0] adam  4000 loss=-7.718e-01 lr=5.0e-04
+  [square_gravity seed=0] adam  5000 loss=-7.718e-01 lr=3.2e-04
+  [square_gravity seed=0] adam  6000 loss=-7.732e-01 lr=1.5e-04
+  [square_gravity seed=0] adam  7000 loss=-7.737e-01 lr=4.8e-05
+  [square_gravity seed=0] adam  7999 loss=-7.744e-01 lr=1.0e-05
+  [square_gravity seed=0] final strong-form loss=1.681e+02
+  [square_gravity seed=1] adam     0 loss=1.426e-01 lr=1.0e-03
+  [square_gravity seed=1] adam  1000 loss=-7.711e-01 lr=9.6e-04
+  [square_gravity seed=1] adam  2000 loss=-7.718e-01 lr=8.5e-04
+  [square_gravity seed=1] adam  3000 loss=-7.721e-01 lr=6.9e-04
+  [square_gravity seed=1] adam  4000 loss=-7.721e-01 lr=5.0e-04
+  [square_gravity seed=1] adam  5000 loss=-7.729e-01 lr=3.2e-04
+  [square_gravity seed=1] adam  6000 loss=-7.725e-01 lr=1.5e-04
+  [square_gravity seed=1] adam  7000 loss=-7.710e-01 lr=4.8e-05
+  [square_gravity seed=1] adam  7999 loss=-7.733e-01 lr=1.0e-05
+  [square_gravity seed=1] final strong-form loss=2.041e+02
+  [square_gravity seed=2] adam     0 loss=2.139e-01 lr=1.0e-03
+  [square_gravity seed=2] adam  1000 loss=-7.707e-01 lr=9.6e-04
+  [square_gravity seed=2] adam  2000 loss=-7.718e-01 lr=8.5e-04
+  [square_gravity seed=2] adam  3000 loss=-7.735e-01 lr=6.9e-04
+  [square_gravity seed=2] adam  4000 loss=-7.723e-01 lr=5.0e-04
+  [square_gravity seed=2] adam  5000 loss=-7.720e-01 lr=3.2e-04
+  [square_gravity seed=2] adam  6000 loss=-7.733e-01 lr=1.5e-04
+  [square_gravity seed=2] adam  7000 loss=-7.723e-01 lr=4.8e-05
+  [square_gravity seed=2] adam  7999 loss=-7.731e-01 lr=1.0e-05
+  [square_gravity seed=2] final strong-form loss=2.759e+02
+square_gravity: ensemble rel-L2 vs FEA = 0.0068  members = [0.0082, 0.0055, 0.0066]

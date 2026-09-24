@@ -1,0 +1,55 @@
+[Warning: Name is nonexistent or not a directory:
+/Users/larryhui/Desktop/ToolboxLS-1.0] 
+[Warning: Name is nonexistent or not a directory:
+/Users/larryhui/Desktop/ToolboxLS-1.0/Examples] 
+[Warning: Name is nonexistent or not a directory:
+/Users/larryhui/Desktop/ToolboxLS-1.0/Examples/Basic] 
+[Warning: Name is nonexistent or not a directory:
+/Users/larryhui/Desktop/ToolboxLS-1.0/Examples/OsherFedkiw] 
+[Warning: Name is nonexistent or not a directory:
+/Users/larryhui/Desktop/ToolboxLS-1.0/Examples/OsherShu] 
+[Warning: Name is nonexistent or not a directory:
+/Users/larryhui/Desktop/ToolboxLS-1.0/Examples/Reachability] 
+[Warning: Name is nonexistent or not a directory:
+/Users/larryhui/Desktop/ToolboxLS-1.0/Examples/Sethian] 
+[Warning: Name is nonexistent or not a directory:
+/Users/larryhui/Desktop/ToolboxLS-1.0/Examples/Test] 
+[Warning: Name is nonexistent or not a directory:
+/Users/larryhui/Desktop/ToolboxLS-1.0/Kernel] 
+[Warning: Name is nonexistent or not a directory:
+/Users/larryhui/Desktop/ToolboxLS-1.0/Kernel/BoundaryCondition] 
+[Warning: Name is nonexistent or not a directory:
+/Users/larryhui/Desktop/ToolboxLS-1.0/Kernel/ExplicitIntegration] 
+[Warning: Name is nonexistent or not a directory:
+/Users/larryhui/Desktop/ToolboxLS-1.0/Kernel/ExplicitIntegration/Dissipation] 
+[Warning: Name is nonexistent or not a directory:
+/Users/larryhui/Desktop/ToolboxLS-1.0/Kernel/ExplicitIntegration/Integrators] 
+[Warning: Name is nonexistent or not a directory:
+/Users/larryhui/Desktop/ToolboxLS-1.0/Kernel/ExplicitIntegration/Term] 
+[Warning: Name is nonexistent or not a directory:
+/Users/larryhui/Desktop/ToolboxLS-1.0/Kernel/Grids] 
+[Warning: Name is nonexistent or not a directory:
+/Users/larryhui/Desktop/ToolboxLS-1.0/Kernel/Helper] 
+[Warning: Name is nonexistent or not a directory:
+/Users/larryhui/Desktop/ToolboxLS-1.0/Kernel/Helper/ErrorCheck] 
+[Warning: Name is nonexistent or not a directory:
+/Users/larryhui/Desktop/ToolboxLS-1.0/Kernel/Helper/Math] 
+[Warning: Name is nonexistent or not a directory:
+/Users/larryhui/Desktop/ToolboxLS-1.0/Kernel/Helper/SignedDistance] 
+[Warning: Name is nonexistent or not a directory:
+/Users/larryhui/Desktop/ToolboxLS-1.0/Kernel/Helper/Visualization] 
+[Warning: Name is nonexistent or not a directory:
+/Users/larryhui/Desktop/ToolboxLS-1.0/Kernel/InitialConditions] 
+[Warning: Name is nonexistent or not a directory:
+/Users/larryhui/Desktop/ToolboxLS-1.0/Kernel/InitialConditions/BasicShapes] 
+[Warning: Name is nonexistent or not a directory:
+/Users/larryhui/Desktop/ToolboxLS-1.0/Kernel/InitialConditions/SetOperations] 
+[Warning: Name is nonexistent or not a directory:
+/Users/larryhui/Desktop/ToolboxLS-1.0/Kernel/SpatialDerivative] 
+[Warning: Name is nonexistent or not a directory:
+/Users/larryhui/Desktop/ToolboxLS-1.0/Kernel/SpatialDerivative/Other] 
+[Warning: Name is nonexistent or not a directory:
+/Users/larryhui/Desktop/ToolboxLS-1.0/Kernel/SpatialDerivative/UpwindFirst] 
+coarse_square: final R2 ux=0.946 uy=0.996 (stored R_ux final 0.946)
+fine_square: final R2 ux=0.913 uy=0.996 (stored R_ux final 0.917)
+coarse_tri: final R2 ux=0.971 uy=0.961 (stored R_ux final 0.970)

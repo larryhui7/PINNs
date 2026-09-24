@@ -1,0 +1,5 @@
+  [cantilever_udl seed=0] adam     0 loss=1.006e+06 lr=1.0e-03
+  [cantilever_udl seed=0] adam  1000 loss=3.503e+00 lr=5.0e-04
+  [cantilever_udl seed=0] adam  1999 loss=2.401e+00 lr=1.0e-05
+  [cantilever_udl seed=0] lbfgs     loss=3.298e-01
+S relL2 1.0197707789252883 tip ref [ 0.25027761 -1.93420224] pinn [-0.00906601  0.04113533] {'pde': 0.10249241441488266, 'top': 0.12097110599279404, 'right': 0.005914296954870224, 'bottom': 0.1004432961344719}

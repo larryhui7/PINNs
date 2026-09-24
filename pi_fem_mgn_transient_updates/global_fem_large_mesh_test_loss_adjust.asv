@@ -1,0 +1,438 @@
+clc
+close all
+
+%% Load ".m" mesh file exported from "gmsh.exe" software
+% run("gmsh_tri_nen_61_numed_216.m")
+% run("gmsh_tri_nen_39_numed_132.m")
+% run("gmsh_nen_25_numel_16.m")
+ run("gmsh_nen_337_numel_304.m")
+padNds = 350; 
+padEds = 1500;
+%% Process Gmsh to get node positions and connectivity data
+[x, y, LM, IX, ID, srlist, edgesNodesMatrix, numnp, ndf, numel, nen, numed] = processGmsh(msh);
+
+%% Plot mesh
+figure
+plot([x(srlist(1, :)); x(srlist(2, :))], [y(srlist(1, :)); y(srlist(2, :))], "k", "LineWidth", 3)
+axis equal 
+
+%% Assign physical properties to the mesh
+E = 7; % Youngs modulus, Pa
+nu = 0.25; % Poissons ratio, no units
+g = -0.1; % Gravitational constant
+rho = 1; % Material density
+D = D_mat(E, nu); % material matrix
+
+%% Assign boundary conditions and body load: x and y directions separately
+nodesLeftBdry = find(x == 0);
+fixed_nodes = [nodesLeftBdry; nodesLeftBdry]; % Fixed left edge nodes
+f_x = [0; g*rho]; % global body load
+
+%% Pull more precise solution for the given mesh: interpolation from more fine triangular FEM mesh
+% GAval = -0.1;
+% W = 1;
+% L = 1;
+% YoungsModulus = 7;
+% nu = 0.25;
+% rho = 1;
+name = "XLeft_YLeft.mat";
+load(name, "femResults")
+intDisp = interpolateDisplacement(femResults, x, y);
+u_exact_static = intDisp.ux';
+v_exact_static = intDisp.uy';
+
+nameTr = "XLeft_YLeft_Tr.mat";
+load(nameTr, "femResults")
+intDispTr = interpolateDisplacement(femResults, x, y);
+
+%% Get global stiffness matrix and force vector
+fixed_x_dof = ID(1, fixed_nodes(1, :)); fixed_y_dof = ID(2, fixed_nodes(2, :)); fixed_dof = [fixed_x_dof, fixed_y_dof];
+free_dof = sort(setdiff(1:numnp*ndf, fixed_dof));
+
+[K, F_uu, K_uu, M, M_uu, M_uu_inv] = globalAssembly(numnp, ndf, numel, x, y, IX, LM, f_x, D, fixed_dof, rho);
+
+%% Solve the system in FEM: validation step
+solnStat = solveFEM(free_dof, numnp, ndf, K, F_uu);
+ntsteps = 300;
+dt = 0.001;
+tlist = 0:dt:(ntsteps*dt);
+tlist_full = 2*ntsteps*dt + dt;
+solnTr = solveFEMTransient(free_dof, numnp, ndf, K, F_uu, M, 0:dt:tlist_full);
+maxU_tr = max(abs(solnTr.ux)); maxV_tr = max(abs(solnTr.uy));
+per = 10;
+magn = per/100*1*1./max([maxU_tr; maxV_tr]);
+defTr.x = x' + magn.*solnTr.ux;
+defTr.y = y' + magn.*solnTr.uy;
+
+
+
+defTr.limX = (1 + per*2/100)*[min(defTr.x, [], "all"), max(defTr.x, [], "all")];
+defTr.limY = [3*min(defTr.y, [], "all"), (1 + per*2/100)*max(defTr.y, [], "all")];
+%% Plot results regular FEM
+scaleFactor = 1;
+% plotMesh(x, y, solnStat, srlist, numed, scaleFactor, intDisp);
+% plotTr(x, y, solnTr,srlist,numed,ntsteps,tlist, scaleFactor, intDispTr);
+
+%% Format inputs into the training code
+% Masks
+dirMaskX = ismember(1:numnp, fixed_nodes(1,:)); dirMaskY = ismember(1:numnp, fixed_nodes(2,:));
+dirMaskRev = paddata([double(~dirMaskX); double(~dirMaskY)], padNds, Dimension = 2);
+
+% Node features
+nodeAttr0 = gpuArray(dlarray(paddata([x; y; zeros(1, numnp); zeros(1, numnp); zeros(1, numnp); zeros(1, numnp)], padNds, Dimension = 2), "CUB"));
+nodeAttr = nodeAttr0;
+% Edge features: direction and magnitude
+XY = [x; y];
+sender_nodes = XY(:, srlist(1,:)); receiver_nodes = XY(:, srlist(2,:)); direc = sender_nodes - receiver_nodes;
+direc_norm = vecnorm(direc); edgeAttr = gpuArray(dlarray(paddata([direc; direc_norm], padEds, Dimension = 2), "CUB"));
+
+% Other inputs to the MGN: connectivity and masks
+edgeMask = gpuArray(dlarray(paddata(ones(1, size(srlist,2)), padEds, Dimension = 2), "CUB"));
+srlist = gpuArray(dlarray(paddata(srlist, padEds, Dimension = 2, FillValue = 1), "CUB"));
+edgesNodesMatrix = gpuArray(dlarray(paddata(edgesNodesMatrix, [padEds, padNds]), "CUB"));
+nodeMask = gpuArray(dlarray(paddata(ones(1, numnp), padNds, Dimension = 2), "CUB"));
+
+% Physics inputs into the modelloss function
+M_in = gpuArray(dlarray(paddata(M_uu, 2*[padNds, padNds])));
+M_inv_in = gpuArray(dlarray(paddata(M_uu_inv, 2*[padNds, padNds])));
+K_in = gpuArray(dlarray(paddata(K_uu, 2*[padNds, padNds])));
+F_in = gpuArray(dlarray(paddata(F_uu, 2*padNds, Dimension = 1)));
+
+numnpGpu = gpuArray(dlarray(numnp));
+dtGpu = gpuArray(dlarray(dt));
+
+%% Generate training monitor
+monitor_single = initiateTrainingMonitor;
+
+%% Training parameters
+initLearnRate = 0.01; % initial learning rate
+learnRateDecay = 0.005; % learning rate decay
+epochs = 5000; % max epochs
+gradDecay = 0.9; % weights gradient decay (MATLAB default is 0.9)
+sqGradDecay = 0.9; % weights square gradient decay (MATLAB default is 0.999)
+
+%% Initiate training
+iteration = 0;
+epoch = 0;
+averageGrad = [];
+averageSqGrad = [];
+learnRate = initLearnRate;
+accFun = dlaccelerate(@modellossTransient);
+clearCache(accFun)
+epochsToPlot = 1:10:epochs;
+freqSave = 5;
+timesToSave = 2:freqSave:length(tlist)+freqSave;
+loss = 100;
+
+numNodeFeatures = 6;
+numEdgeFeatures = 3;
+batchSize = 1;
+outputSize = 2;
+net = meshGraphNetwork(numNodeFeatures, numEdgeFeatures, padNds, padEds, batchSize, outputSize);
+%load("netStaticPretrained.mat") % using pretrained network helps to output more uniform mesh, might want to freeze all but decoder when retraining
+
+%% Initiate solution matrix
+ux_pred_mat = zeros(padNds, length(tlist)); uy_pred_mat = zeros(padNds, length(tlist));
+
+%% Perform the training:
+figure
+for it = 2:length(tlist)
+
+    t = tlist(it);
+    % Get exact values
+    ux_tr = paddata(solnTr.ux(:, it)', padNds, Dimension = 2); uy_tr = paddata(solnTr.uy(:, it)', padNds, Dimension = 2);
+    u_tr = gpuArray(dlarray([ux_tr; uy_tr]));
+    % Get previous data
+    uv_prev = gpuArray(dlarray(reshape(nodeAttr(3:4, :), [], 1)));
+    % Evaluate previous acceleration via M*a + K*u = F
+    A_prev = reshape(M_inv_in*(F_in - K_in*uv_prev), 2, []);
+
+    epoch = 0;
+    learnRate = initLearnRate;
+
+    while epoch < epochs && ~monitor_single.Stop && loss > 1e-9
+        epoch = epoch + 1;
+        iteration = iteration + 1;
+
+        % Evaluate the model gradients and loss
+        [loss, gradients, U_pred, V_pred] = ...
+            dlfeval(accFun, net, nodeAttr, edgeAttr, srlist, edgeMask, edgesNodesMatrix, nodeMask,...
+            dirMaskRev, M_in, K_in, F_in, A_prev, numnpGpu, dtGpu);
+
+        % Pull out the predicted displacemenets at t
+        ux_pred = extractdata(gather(U_pred(1, :))); uy_pred = extractdata(gather(U_pred(2, :)));
+        sqU = 1 - sum((ux_tr - ux_pred).^2, "all")/sum(ux_tr.^2, "all"); sqV = 1 - sum((uy_tr - uy_pred).^2, "all")/sum(uy_tr.^2, "all");
+
+        % Update the plot
+        if any(epochsToPlot == epoch)
+            x_def = x + magn(it)*ux_pred(1:numnp);
+            y_def = y + magn(it)*uy_pred(1:numnp);
+            curFig = gcf;
+            clf(curFig)
+            hold on
+            scatter(defTr.x(:, it), defTr.y(:, it), 50, "red", "filled", "DisplayName", "FEM")
+            scatter(x_def, y_def, 50, "blue", "filled", "DisplayName", "Predicted")
+            title("R^2_{ux}: " + num2str(sqU) + " R^2_{uy}: " + num2str(sqV))
+            subtitle("Epoch: " + num2str(epoch) + ", Timestep: " + num2str(t) + " s, Magnitude: " + num2str(magn(it)))
+            legend()
+
+            xlim(defTr.limX)
+            ylim(defTr.limY)
+            axis equal
+            drawnow
+        end
+
+        % Update training parameters
+        gradients = dlupdate(@gather, gradients); % keep params on CPU
+
+        % Update the network parameters using the ADAM optimizer.
+        [net, averageGrad, averageSqGrad] =...
+            adamupdate(net, gradients, averageGrad, averageSqGrad, epoch, learnRate, gradDecay, sqGradDecay);
+
+        % Record data in the training monitor
+        updateInfo(monitor_single,...
+            "Epoch", epoch,...
+            "Timestep", t,...
+            "LearnRate", learnRate, ...
+            "sqR_U", sqU, ...
+            "sqR_V", sqV);
+        if abs(sqU) > 1
+            sqU = 0;
+        end
+        if abs(sqV) > 1
+            sqV = 0;
+        end
+        recordMetrics(monitor_single, iteration, ...
+            "LossTotal", loss, ...
+            "sqR_U", sqU,...
+            "sqR_V", sqV);
+
+        % Update learning rate.
+        learnRate = initLearnRate/(1+learnRateDecay*epoch);
+    end
+    ux_pred_mat(:, it) = ux_pred';
+    uy_pred_mat(:, it) = uy_pred';
+    nodeAttr(3:4, :) = U_pred;
+    nodeAttr(5:6, :) = V_pred;
+    loss = 100;
+    if any(timesToSave == it)
+        exportgraphics(gcf,"C:\Users\ekata\MATLAB Drive\pi_fem_mgn_transient\figures\timestep" + num2str(it) + ".png", 'Resolution', 300)
+    end
+
+    monitor_single.Progress = 100*it/length(tlist);
+
+end
+
+%% Static
+% function [loss, gradients, UV_pred] =...
+%     modellossStatic(net, nodeAttr, edgeAttr, srlist, edgeMask, edgesNodesMatrix, nodeMask,...
+%     dirMaskRev, K, F, numnp)
+%
+% % Make prediction
+% UV_pred = permute(stripdims(net.forward(nodeAttr,...
+%     edgeAttr, srlist, edgeMask, edgesNodesMatrix, nodeMask)), [1, 3, 2]);
+%
+% % Apply Dirichlet BC directly
+% UV_pred = reshape(UV_pred, [], 1).*dirMaskRev;
+%
+% % Calculate the residual
+% lossR = sum((K*UV_pred - F).^2, "all")/numnp;
+%
+% % Calculate data loss
+% %UV_diff = (UV_exact - UV_pred).*maskULoss;
+% %lossUV = sum(UV_diff.^2, "all")/numnp;
+%
+% % Calculate loss
+% loss = lossR;
+% gradients = dlgradient(loss, net.Learnables);
+% end
+
+%% Transient: simple euler u_n+1
+% function [loss, gradients, U_pred, V_pred] = modellossTransient(net,...
+%     nodeAttr, edgeAttr, srlist, edgeMask, edgesNodesMatrix, nodeMask,...
+%     dirMaskRev, M, K, F, numnp, dt, u_validate)
+%
+% % Inputs:
+% % - net: Neural network model used for prediction
+% % - nodeAttr: Node features - spatial coordinates, n-1 displacement, and n-1 velocity
+% % - edgeAttr: Edge features - x, y edge displacements, and lengths
+% % - srlist: Sender-receiver list defining connectivity
+% % - edgeMask: Masking vector for edges
+% % - edgesNodesMatrix: Matrix defining node connectivity through edges
+% % - nodeMask: Masking vector for active nodes in the computation
+% % - dirMaskRev: Mask to enforce Dirichlet boundary conditions (1 x 2*numnp)
+% % - M: Mass matrix for transient elasticity
+% % - K: Stiffness matrix for elasticity
+% % - F: Force vector (external forces applied to the system, constant gravity here)
+% % - numnp: Number of nodes in the mesh
+% % - dt: Time step for finite difference calculations
+%
+% % Node features:
+% % - 1-2 rows: x, y positions
+% % - 3-4 rows: ux, uy, previous displacement
+% % - 5-6 rows: vx, vy, previous velocity
+%
+% % Make prediction
+% output = permute(stripdims(net.forward(nodeAttr,...
+%     edgeAttr, srlist, edgeMask, edgesNodesMatrix, nodeMask)), [1, 3, 2]);
+% U_pred = (output(1:2, :)).*dirMaskRev;
+%
+% % Previous terms
+% U_prev = nodeAttr(3:4, :);
+% V_prev = nodeAttr(5:6, :);
+%
+% % Interpolation
+% V_pred = (U_pred - U_prev) / dt;
+% A_pred = (V_pred - V_prev) / dt;
+%
+% % Compute residual R = M * a + K * u - F
+% residual = M * reshape(A_pred, [], 1) + K * reshape(U_pred, [], 1) - F;
+%
+% % Compute loss as squared residual norm
+% loss = sum(residual.^2, "all") / numnp;
+%
+% % Compute gradients
+% gradients = dlgradient(loss, net.Learnables);
+% end
+
+%% Transient: with respect to v_n+1
+% function [loss, gradients, U_pred, V_pred] = modellossTransient(net,...
+%     nodeAttr, edgeAttr, srlist, edgeMask, edgesNodesMatrix, nodeMask,...
+%     dirMaskRev, M, K, F, numnp, dt, u_validate)
+%
+% % Inputs:
+% % - net: Neural network model used for prediction
+% % - nodeAttr: Node features - spatial coordinates, n-1 displacement, and n-1 velocity
+% % - edgeAttr: Edge features - x, y edge displacements, and lengths
+% % - srlist: Sender-receiver list defining connectivity
+% % - edgeMask: Masking vector for edges
+% % - edgesNodesMatrix: Matrix defining node connectivity through edges
+% % - nodeMask: Masking vector for active nodes in the computation
+% % - dirMaskRev: Mask to enforce Dirichlet boundary conditions (1 x 2*numnp)
+% % - M: Mass matrix for transient elasticity
+% % - K: Stiffness matrix for elasticity
+% % - F: Force vector (external forces applied to the system, constant gravity here)
+% % - numnp: Number of nodes in the mesh
+% % - dt: Time step for finite difference calculations
+%
+% % Node features:
+% % - 1-2 rows: x, y positions
+% % - 3-4 rows: ux, uy, previous displacement
+% % - 5-6 rows: vx, vy, previous velocity
+%
+% % Make prediction
+% output = permute(stripdims(net.forward(nodeAttr,...
+%     edgeAttr, srlist, edgeMask, edgesNodesMatrix, nodeMask)), [1, 3, 2]);
+% V_pred = (output(1:2, :)).*dirMaskRev;
+%
+% % Previous terms
+% U_prev = nodeAttr(3:4, :);
+% V_prev = nodeAttr(5:6, :);
+%
+% % Interpolation
+% U_pred = V_pred*dt + U_prev;
+% A_pred = (V_pred - V_prev) / dt;
+%
+% % Compute residual R = M * a + K * u - F
+% residual = M * reshape(A_pred, [], 1) + K * reshape(U_pred, [], 1) - F;
+%
+% % Compute loss as squared residual norm
+% loss = sum(residual.^2, "all") / numnp;
+%
+% % Compute gradients
+% gradients = dlgradient(loss, net.Learnables);
+% end
+
+%% Transient using two loss terms
+% function [loss, gradients, U_pred, V_pred, A_pred] = modellossTransient(net,...
+%     nodeAttr, edgeAttr, srlist, edgeMask, edgesNodesMatrix, nodeMask,...
+%     dirMaskRev, M, K, F, A_prev, numnp, dt)
+%
+% % Make prediction:
+% output = permute(stripdims(net.forward(nodeAttr,...
+%     edgeAttr, srlist, edgeMask, edgesNodesMatrix, nodeMask)), [1, 3, 2]);
+% U_delta = output(1:2, :).*dirMaskRev;
+% V_delta = output(3:4, :).*dirMaskRev;
+%
+% % Previous terms:
+% U_prev = nodeAttr(3:4, :);
+% V_prev = nodeAttr(5:6, :);
+%
+% U_pred = U_delta + U_prev;
+% V_pred = V_delta + V_prev;
+%
+% % Error interpolate:
+% U_pred_interpolate = U_prev + 1/2*(V_pred + V_prev)*dt;
+%
+% % Compute acceleration:
+% beta = 0.25;
+% A_pred = 1/(dt^2*beta)*(U_delta - V_prev*dt) - (1-2*beta)/(2*beta)*A_prev;
+%
+% % Compute residual:
+% A_pred_reshape = reshape(A_pred, [], 1);
+% U_pred_reshape = reshape(U_pred, [], 1);
+% residual = M*A_pred_reshape + K*U_pred_reshape - F;
+%
+% % Compute loss as squared residual norm:
+% lossR = sum(residual.^2, "all") / numnp ;
+% lossU = sum((U_pred_interpolate - U_pred).^2, "all") / numnp;
+% loss = lossU + lossR;
+%
+% % Compute gradients:
+% gradients = dlgradient(loss, net.Learnables);
+% end
+%%
+function [loss, gradients, U_pred, V_pred, A_pred] = modellossTransient(net,...
+    nodeAttr, edgeAttr, srlist, edgeMask, edgesNodesMatrix, nodeMask,...
+    dirMaskRev, M, K, F, A_prev, numnp, dt)
+
+% Make prediction:
+output = permute(stripdims(net.forward(nodeAttr,...
+    edgeAttr, srlist, edgeMask, edgesNodesMatrix, nodeMask)), [1, 3, 2]);
+%A_delta = output(1:2, :);
+%A_pred = A_prev + A_delta;
+A_pred = output(1:2, :);
+% Previous terms:
+U_prev = nodeAttr(3:4, :);
+V_prev = nodeAttr(5:6, :);
+
+% Error interpolate: time integration trapezoidal 
+V_pred = (V_prev + 1/2*(A_prev + A_pred)*dt).*dirMaskRev;
+U_pred = (U_prev + 1/2*(V_prev + V_pred)*dt).*dirMaskRev;
+
+% Compute residual:
+A_pred_reshape = reshape(A_pred, [], 1);
+U_pred_reshape = reshape(U_pred, [], 1);
+residual = M*A_pred_reshape + K*U_pred_reshape - F;
+
+% Compute loss as squared residual norm:
+loss = sum(residual.^2, "all") / numnp ;
+
+% Compute gradients:
+gradients = dlgradient(loss, net.Learnables);
+end
+%%
+function edgeAttr = edgeAttrFun(XY, srlist)
+
+sender_nodes = XY(:, srlist(1,:)); receiver_nodes = XY(:, srlist(2,:)); direc = sender_nodes - receiver_nodes;
+direc_norm = vecnorm(direc); edgeAttr = gpuArray(dlarray([direc; direc_norm], "CUB"));
+end
+
+function monitor_single = initiateTrainingMonitor
+monitor_single = trainingProgressMonitor; % initate trainition monitor
+
+% Set metrics
+monitor_single.Metrics = ["LossTotal", "sqR_U", "sqR_V"];
+groupSubPlot(monitor_single, "Loss","LossTotal");
+groupSubPlot(monitor_single, "sqR", ["sqR_U", "sqR_V"]);
+
+% Set axis
+yscale(monitor_single,"Loss","log")
+monitor_single.XLabel = "Iteration";
+
+% Set progress
+monitor_single.Progress = 0;
+
+% Initiate monitor information
+monitor_single.Info = ["Epoch", "LearnRate", "sqR_U", "sqR_V", "Timestep"];
+end

@@ -1,0 +1,4 @@
+  [mgn seed=0] epoch    1 graphs=168 loss=1.117e+00 phys=1.858e+00 lr=1.0e-03
+  [mgn seed=0] epoch   25 graphs=168 loss=6.094e-01 phys=1.665e+00 lr=7.8e-04
+  [mgn seed=0] epoch   50 graphs=168 loss=3.395e-01 phys=1.531e+00 lr=3.1e-04
+  [mgn seed=0] epoch   75 graphs=168 loss=2.690e-01 phys=1.253e+00 lr=1.1e-05

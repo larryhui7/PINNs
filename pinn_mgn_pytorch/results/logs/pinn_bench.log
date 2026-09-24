@@ -1,0 +1,33 @@
+Matplotlib is building the font cache; this may take a moment.
+  [timoshenko_beam seed=0] adam     0 loss=3.584e+04 lr=1.0e-03
+  [timoshenko_beam seed=0] adam  1000 loss=5.811e+00 lr=7.5e-04
+  [timoshenko_beam seed=0] adam  2000 loss=3.589e+00 lr=2.6e-04
+  [timoshenko_beam seed=0] adam  2999 loss=3.277e+00 lr=1.0e-05
+  [timoshenko_beam seed=0] lbfgs     loss=1.110e-04
+  [timoshenko_beam seed=1] adam     0 loss=3.085e+03 lr=1.0e-03
+  [timoshenko_beam seed=1] adam  1000 loss=3.162e+00 lr=7.5e-04
+  [timoshenko_beam seed=1] adam  2000 loss=1.970e+00 lr=2.6e-04
+  [timoshenko_beam seed=1] adam  2999 loss=1.679e+00 lr=1.0e-05
+  [timoshenko_beam seed=1] lbfgs     loss=2.214e-04
+  [timoshenko_beam seed=2] adam     0 loss=2.216e+04 lr=1.0e-03
+  [timoshenko_beam seed=2] adam  1000 loss=3.620e+00 lr=7.5e-04
+  [timoshenko_beam seed=2] adam  2000 loss=2.306e+00 lr=2.6e-04
+  [timoshenko_beam seed=2] adam  2999 loss=2.069e+00 lr=1.0e-05
+  [timoshenko_beam seed=2] lbfgs     loss=9.220e-05
+timoshenko_beam: ensemble rel-L2 vs FEA = 0.0093  members = [0.0077, 0.0102, 0.0098]
+  [cantilever_udl seed=0] adam     0 loss=9.970e+05 lr=1.0e-03
+  [cantilever_udl seed=0] adam  1000 loss=3.069e+00 lr=7.5e-04
+  [cantilever_udl seed=0] adam  2000 loss=1.495e+00 lr=2.6e-04
+  [cantilever_udl seed=0] adam  2999 loss=1.302e+00 lr=1.0e-05
+  [cantilever_udl seed=0] lbfgs     loss=3.292e-01
+  [cantilever_udl seed=1] adam     0 loss=8.654e+04 lr=1.0e-03
+  [cantilever_udl seed=1] adam  1000 loss=8.618e-01 lr=7.5e-04
+  [cantilever_udl seed=1] adam  2000 loss=5.413e-01 lr=2.6e-04
+  [cantilever_udl seed=1] adam  2999 loss=5.043e-01 lr=1.0e-05
+  [cantilever_udl seed=1] lbfgs     loss=3.323e-01
+  [cantilever_udl seed=2] adam     0 loss=5.913e+05 lr=1.0e-03
+  [cantilever_udl seed=2] adam  1000 loss=3.463e+00 lr=7.5e-04
+  [cantilever_udl seed=2] adam  2000 loss=1.528e+00 lr=2.6e-04
+  [cantilever_udl seed=2] adam  2999 loss=1.310e+00 lr=1.0e-05
+  [cantilever_udl seed=2] lbfgs     loss=3.295e-01
+cantilever_udl: ensemble rel-L2 vs FEA = 1.0170  members = [1.0216, 1.0101, 1.0193]

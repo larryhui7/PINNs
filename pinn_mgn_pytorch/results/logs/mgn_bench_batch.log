@@ -1,0 +1,37 @@
+  [mgn seed=0] epoch    1 graphs=124 loss=2.761e+01 pattern=1.316e+00 amp=1.405e+00 phys=2.489e+03 lr=1.0e-03
+  [mgn seed=0] epoch   25 graphs=124 loss=6.708e-01 pattern=1.016e-01 amp=3.680e-01 phys=2.011e+01 lr=9.9e-04
+  [mgn seed=0] epoch   50 graphs=124 loss=4.487e-01 pattern=5.085e-02 amp=2.350e-01 phys=1.628e+01 lr=9.6e-04
+  [mgn seed=0] epoch   75 graphs=124 loss=3.754e-01 pattern=3.292e-02 amp=1.428e-01 phys=1.997e+01 lr=9.2e-04
+  [mgn seed=0] epoch  100 graphs=192 loss=4.479e-01 pattern=3.809e-02 amp=1.862e-01 phys=2.237e+01 lr=8.5e-04
+  [mgn seed=0] epoch  125 graphs=192 loss=2.882e-01 pattern=2.072e-02 amp=1.462e-01 phys=1.214e+01 lr=7.3e-04
+  [mgn seed=0] epoch  150 graphs=192 loss=2.548e-01 pattern=1.200e-02 amp=1.462e-01 phys=9.664e+00 lr=5.9e-04
+  [mgn seed=0] epoch  175 graphs=192 loss=1.852e-01 pattern=9.638e-03 amp=9.300e-02 phys=8.259e+00 lr=4.5e-04
+  [mgn seed=0] epoch  200 graphs=192 loss=1.526e-01 pattern=9.527e-03 amp=8.273e-02 phys=6.032e+00 lr=3.1e-04
+  [mgn seed=0] epoch  225 graphs=192 loss=1.387e-01 pattern=5.179e-03 amp=6.071e-02 phys=7.281e+00 lr=1.8e-04
+  [mgn seed=0] epoch  250 graphs=192 loss=9.388e-02 pattern=4.227e-03 amp=4.462e-02 phys=4.503e+00 lr=8.4e-05
+  [mgn seed=0] epoch  275 graphs=192 loss=1.091e-01 pattern=3.822e-03 amp=7.507e-02 phys=3.016e+00 lr=2.2e-05
+  [mgn seed=0] epoch  300 graphs=192 loss=1.057e-01 pattern=4.294e-03 amp=7.261e-02 phys=2.882e+00 lr=1.0e-06
+beam_end_shear_L7_D1_70x10             n=  781 ensemble=0.7081 members=[0.7081]
+beam_end_shear_L4_D1_48x12             n=  637 ensemble=0.2820 members=[0.282]
+beam_udl_L7_D1_56x8                    n=  513 ensemble=0.6774 members=[0.6774]
+beam_gravity_L5_D1_50x10               n=  561 ensemble=0.7569 members=[0.7569]
+hole_a0.25_s1,0_28x14                  n=  435 ensemble=0.0662 members=[0.0662]
+hole_a0.25_s1,1_40x20                  n=  861 ensemble=0.0650 members=[0.065]
+hole_a0.2_s1,0.5_36x18                 n=  703 ensemble=0.1308 members=[0.1308]
+plate_left_gravity_1.5x1_n18           n=  247 ensemble=0.1947 members=[0.1947]
+plate_bottom_lateral_1x1_n20           n=  441 ensemble=0.0643 members=[0.0643]
+beam_end_shear_L7_D1_70x10             dofs=  1562 FEA=    9.7ms MGN=   27.9ms PCG0=    7.7ms(239) PCG+MGN=   38.9ms(341)
+beam_end_shear_L4_D1_48x12             dofs=  1274 FEA=    7.9ms MGN=   24.5ms PCG0=    5.3ms(181) PCG+MGN=   32.2ms(264)
+beam_udl_L7_D1_56x8                    dofs=  1026 FEA=    6.0ms MGN=   22.2ms PCG0=    7.2ms(267) PCG+MGN=   29.5ms(272)
+beam_gravity_L5_D1_50x10               dofs=  1122 FEA=    7.3ms MGN=   23.7ms PCG0=    4.9ms(175) PCG+MGN=   31.0ms(261)
+hole_a0.25_s1,0_28x14                  dofs=   870 FEA=    5.6ms MGN=   18.4ms PCG0=    3.8ms(208) PCG+MGN=   22.2ms(207)
+hole_a0.25_s1,1_40x20                  dofs=  1722 FEA=   11.3ms MGN=   28.9ms PCG0=    6.5ms(198) PCG+MGN=   38.7ms(296)
+hole_a0.2_s1,0.5_36x18                 dofs=  1406 FEA=    8.9ms MGN=   25.8ms PCG0=    8.3ms(282) PCG+MGN=   34.0ms(275)
+plate_left_gravity_1.5x1_n18           dofs=   494 FEA=    3.5ms MGN=   14.4ms PCG0=    1.3ms(85) PCG+MGN=   16.3ms(125)
+plate_bottom_lateral_1x1_n20           dofs=   882 FEA=    6.2ms MGN=   19.2ms PCG0=    2.1ms(109) PCG+MGN=   22.3ms(167)
+beam_end_shear_L7_D1_140x20            dofs=  5922 FEA=   44.3ms MGN=   74.2ms PCG0=   37.3ms(480) PCG+MGN=  128.3ms(675)
+beam_end_shear_L7_D1_280x40            dofs= 23042 FEA=  307.9ms MGN=  304.8ms PCG0=  245.9ms(960) PCG+MGN=  644.5ms(1348)
+hole_a0.25_s1,1_80x40                  dofs=  6642 FEA=   63.0ms MGN=   77.9ms PCG0=   36.4ms(412) PCG+MGN=  135.6ms(634)
+hole_a0.25_s1,1_160x80                 dofs= 26082 FEA=  330.1ms MGN=  309.8ms PCG0=  245.7ms(844) PCG+MGN=  688.9ms(1291)
+plate_left_gravity_1.5x1_n60           dofs=  5002 FEA=   46.4ms MGN=   65.2ms PCG0=   20.9ms(290) PCG+MGN=   96.6ms(432)
+plate_left_gravity_1.5x1_n120          dofs= 19602 FEA=  251.0ms MGN=  245.7ms PCG0=  131.2ms(585) PCG+MGN=  438.4ms(867)

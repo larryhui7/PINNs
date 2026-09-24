@@ -1,0 +1,21 @@
+  [mgn seed=0] epoch    1 graphs= 60 loss=4.452e+00 pattern=2.349e+00 amp=1.090e+00 phys=1.013e+02 lr=1.0e-03
+  [mgn seed=0] epoch   25 graphs= 60 loss=1.516e+00 pattern=9.084e-01 amp=5.813e-01 phys=2.682e+00 lr=9.8e-04
+  [mgn seed=0] epoch   50 graphs= 60 loss=9.270e-01 pattern=7.563e-01 amp=7.665e-02 phys=9.399e+00 lr=9.3e-04
+  [mgn seed=0] epoch   75 graphs= 60 loss=7.106e-01 pattern=5.625e-01 amp=5.142e-02 phys=9.664e+00 lr=8.5e-04
+  [mgn seed=0] epoch  100 graphs= 60 loss=5.612e-01 pattern=4.570e-01 amp=1.463e-02 phys=8.963e+00 lr=7.5e-04
+  [mgn seed=0] epoch  125 graphs= 60 loss=4.833e-01 pattern=3.757e-01 amp=2.828e-02 phys=7.929e+00 lr=6.3e-04
+  [mgn seed=0] epoch  150 graphs= 60 loss=4.619e-01 pattern=3.723e-01 amp=1.418e-02 phys=7.541e+00 lr=5.0e-04
+  [mgn seed=0] epoch  175 graphs= 60 loss=8.869e-01 pattern=3.298e-01 amp=6.203e-03 phys=5.510e+01 lr=3.7e-04
+  [mgn seed=0] epoch  200 graphs= 60 loss=3.986e-01 pattern=3.291e-01 amp=5.205e-03 phys=6.422e+00 lr=2.5e-04
+  [mgn seed=0] epoch  225 graphs= 60 loss=3.622e-01 pattern=2.956e-01 amp=4.458e-03 phys=6.208e+00 lr=1.5e-04
+  [mgn seed=0] epoch  250 graphs= 60 loss=3.910e-01 pattern=3.249e-01 amp=3.960e-03 phys=6.218e+00 lr=6.8e-05
+  [mgn seed=0] epoch  275 graphs= 60 loss=3.800e-01 pattern=3.141e-01 amp=4.082e-03 phys=6.186e+00 lr=1.8e-05
+  [mgn seed=0] epoch  300 graphs= 60 loss=3.957e-01 pattern=3.299e-01 amp=4.184e-03 phys=6.159e+00 lr=1.0e-06
+head train median 0.2530719265341759
+  head hole_a0.25_s1,0_28x14                0.1212
+  head hole_a0.25_s1,1_40x20                0.9499
+  head hole_a0.2_s1,0.5_36x18               1.3888
+ritz train median 0.33642251789569855
+  ritz hole_a0.25_s1,0_28x14                0.1210
+  ritz hole_a0.25_s1,1_40x20                0.9265
+  ritz hole_a0.2_s1,0.5_36x18               0.9918

@@ -1,0 +1,7 @@
+  [cantilever_udl seed=0] adam     0 loss=1.309e+00 lr=1.0e-03
+  [cantilever_udl seed=0] adam   500 loss=-7.914e-04 lr=8.5e-04
+  [cantilever_udl seed=0] adam  1000 loss=-9.783e-04 lr=5.0e-04
+  [cantilever_udl seed=0] adam  1500 loss=-1.040e-03 lr=1.5e-04
+  [cantilever_udl seed=0] adam  1999 loss=-1.051e-03 lr=1.0e-05
+  [cantilever_udl seed=0] final strong-form loss=3.256e-01
+energy+strong relL2 1.0173650018667677 tip ref [ 0.25027761 -1.93420224] pinn [-0.00753966  0.03548463] time 114.62641416676342

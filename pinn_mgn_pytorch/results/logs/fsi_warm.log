@@ -1,0 +1,16 @@
+  [fsi] epoch    1 fluid-only warm start  data_f=3.95e-01 data_s=6.17e-01 amp=1.41e+00 res_f=5.28e+00 res_s=2.43e+04
+  [fsi] epoch   20 fluid-only warm start  data_f=4.41e-02 data_s=2.52e+00 amp=1.44e+00 res_f=6.28e-01 res_s=6.32e+04
+  [fsi] epoch   40 fluid-only warm start  data_f=7.58e-03 data_s=2.41e+00 amp=1.24e+00 res_f=1.05e-01 res_s=7.86e+04
+  [fsi] epoch   60 fluid-only warm start  data_f=2.83e-03 data_s=2.35e+00 amp=1.19e+00 res_f=3.25e-02 res_s=7.29e+04
+  [fsi] epoch   80 coupled                data_f=5.68e-02 data_s=4.04e-02 amp=8.94e-02 res_f=5.79e-01 res_s=2.99e+03
+  [fsi] epoch  100 coupled                data_f=1.67e-02 data_s=9.87e-03 amp=2.55e-02 res_f=2.24e-01 res_s=4.50e+01
+  [fsi] epoch  120 coupled                data_f=8.13e-03 data_s=6.86e-03 amp=1.32e-02 res_f=1.32e-01 res_s=3.15e+01
+  [fsi] epoch  140 coupled                data_f=6.64e-03 data_s=2.49e-03 amp=7.64e-03 res_f=7.20e-02 res_s=1.23e+01
+  [fsi] epoch  160 coupled                data_f=6.25e-03 data_s=2.71e-03 amp=9.70e-03 res_f=5.25e-02 res_s=1.06e+01
+  [fsi] epoch  180 coupled                data_f=5.53e-03 data_s=1.16e-03 amp=6.58e-03 res_f=3.60e-02 res_s=3.59e+00
+  [fsi] epoch  200 coupled                data_f=5.34e-03 data_s=6.90e-04 amp=2.66e-03 res_f=2.85e-02 res_s=1.73e+00
+  [fsi] epoch  220 coupled                data_f=4.93e-03 data_s=3.03e-04 amp=1.99e-03 res_f=2.20e-02 res_s=3.12e-01
+  [fsi] epoch  240 coupled                data_f=4.75e-03 data_s=1.98e-04 amp=1.45e-03 res_f=2.06e-02 res_s=2.20e-01
+fsi_h0.45_w0.1_x1.25_ny20        velocity=0.0448 pressure=0.0382 solid_disp=0.0477
+fsi_h0.55_w0.125_x1_ny24         velocity=0.0676 pressure=0.0673 solid_disp=0.0376
+fsi_h0.35_w0.15_x1.2_ny20        velocity=0.0205 pressure=0.0430 solid_disp=0.0519

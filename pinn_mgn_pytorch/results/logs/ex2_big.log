@@ -1,0 +1,17 @@
+  [mgn seed=0] epoch    1 graphs=168 loss=7.283e+00 pattern=1.164e+00 amp=1.517e+00 phys=4.602e+02 lr=1.0e-03
+  [mgn seed=0] epoch   25 graphs=168 loss=1.243e+00 pattern=6.083e-01 amp=4.730e-01 phys=1.614e+01 lr=9.3e-04
+  [mgn seed=0] epoch   50 graphs=168 loss=1.043e+00 pattern=5.604e-01 amp=3.123e-01 phys=1.705e+01 lr=7.5e-04
+  [mgn seed=0] epoch   75 graphs=168 loss=9.710e-01 pattern=5.591e-01 amp=2.806e-01 phys=1.313e+01 lr=5.0e-04
+  [mgn seed=0] epoch  100 graphs=168 loss=6.255e-01 pattern=3.152e-01 amp=2.347e-01 phys=7.554e+00 lr=2.5e-04
+  [mgn seed=0] epoch  125 graphs=168 loss=5.535e-01 pattern=2.943e-01 amp=2.108e-01 phys=4.838e+00 lr=6.8e-05
+  [mgn seed=0] epoch  150 graphs=168 loss=5.109e-01 pattern=2.778e-01 amp=2.008e-01 phys=3.235e+00 lr=1.0e-06
+train subset median err 0.39823246747255325 max 18.419408798217773
+beam_end_shear_L7_D1_70x10               0.9009
+beam_end_shear_L4_D1_48x12               0.6256
+beam_udl_L7_D1_56x8                      0.7566
+beam_gravity_L5_D1_50x10                 0.4724
+hole_a0.25_s1,0_28x14                    0.1506
+hole_a0.25_s1,1_40x20                    0.8270
+hole_a0.2_s1,0.5_36x18                   1.1106
+plate_left_gravity_1.5x1_n18             0.2901
+plate_bottom_lateral_1x1_n20             0.1035

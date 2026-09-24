@@ -1,0 +1,16 @@
+  [square_gravity seed=0] adam     0 loss=2.617e-01 lr=1.0e-03
+  [square_gravity seed=0] adam  1000 loss=-7.703e-01 lr=7.5e-04
+  [square_gravity seed=0] adam  2000 loss=-7.716e-01 lr=2.6e-04
+  [square_gravity seed=0] adam  2999 loss=-7.718e-01 lr=1.0e-05
+  [square_gravity seed=0] final strong-form loss=1.259e+09
+  [square_gravity seed=1] adam     0 loss=1.426e-01 lr=1.0e-03
+  [square_gravity seed=1] adam  1000 loss=-7.707e-01 lr=7.5e-04
+  [square_gravity seed=1] adam  2000 loss=-7.719e-01 lr=2.6e-04
+  [square_gravity seed=1] adam  2999 loss=-7.721e-01 lr=1.0e-05
+  [square_gravity seed=1] final strong-form loss=9.730e+08
+  [square_gravity seed=2] adam     0 loss=2.139e-01 lr=1.0e-03
+  [square_gravity seed=2] adam  1000 loss=-7.694e-01 lr=7.5e-04
+  [square_gravity seed=2] adam  2000 loss=-7.707e-01 lr=2.6e-04
+  [square_gravity seed=2] adam  2999 loss=-7.709e-01 lr=1.0e-05
+  [square_gravity seed=2] final strong-form loss=2.236e+09
+square_gravity: ensemble rel-L2 vs FEA = 0.3256  members = [0.4182, 0.2269, 0.3326]

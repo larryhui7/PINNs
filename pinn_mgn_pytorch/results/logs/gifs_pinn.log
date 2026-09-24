@@ -1,0 +1,8 @@
+Traceback (most recent call last):
+  File "/Users/larryhui/Desktop/UC Berkeley/Gu Lab Research/pinn_mgn_pytorch/scripts/make_pytorch_gifs.py", line 213, in <module>
+  File "/Users/larryhui/Desktop/UC Berkeley/Gu Lab Research/pinn_mgn_pytorch/scripts/make_pytorch_gifs.py", line 124, in run_pinn
+  File "/Users/larryhui/Desktop/UC Berkeley/Gu Lab Research/pinn_mgn_pytorch/scripts/make_pytorch_gifs.py", line 101, in render_mesh_gif
+  File "/Users/larryhui/Desktop/UC Berkeley/Gu Lab Research/pinn_mgn_pytorch/scripts/make_pytorch_gifs.py", line 54, in save_gif
+  File "/Users/larryhui/Desktop/UC Berkeley/Gu Lab Research/.venv/lib/python3.13/site-packages/PIL/Image.py", line 2706, in save
+    fp = builtins.open(filename, "w+b")
+FileNotFoundError: [Errno 2] No such file or directory: '/Users/larryhui/Desktop/UC Berkeley/Gu Lab Research/pinn_mgn_pytorch/scripts/../results/gifs/pinn_timoshenko_beam.gif'
